@@ -1,26 +1,44 @@
 package io.zipcoder;
 
-public class Music {
+import java.util.ArrayList;
+import java.util.Arrays;
 
+public class Music {
+    //given the array of strings and the string to find, use the given start index to find the
+    //min distance from the start index to the selection
+    //
     private String[] playList;
 
-    public Music(String[] playList){
+    public Music(String[] playList) {
         this.playList = playList;
     }
 
-    public Integer selection(Integer startIndex, String selection){
-        int selectionIndex = 0;
-        for (int i = 0; i < playList.length; i++) {
-            if(playList[i] == selection){
-                selectionIndex = i;
+    public Integer selection(Integer startIndex, String selection) {
+        ArrayList<String> playlistArrayList = new ArrayList<String>(Arrays.asList(playList));
+        ArrayList<String> tempList = new ArrayList<String>();
+        tempList.addAll(playlistArrayList);
+        tempList.addAll(playlistArrayList);
+        tempList.addAll(playlistArrayList);
+
+        Integer countForward = 0;
+        Integer countBackward = 0;
+        int length = playlistArrayList.size() + startIndex;
+
+        for (int i = length; i < tempList.size(); i++) {
+            if (tempList.get(i) == selection) {
+                break;
             }
-
+            countForward++;
         }
 
-        if(Math.abs(selectionIndex - startIndex) == playList.length - 1){
-            return 1;
+        for (int i = length; i > 0; i--) {
+            if (tempList.get(i) == selection) {
+                break;
+            }
+            countBackward++;
         }
 
-        return Math.abs(selectionIndex - startIndex);
+        return Math.min(countForward, countBackward);
+
     }
 }
